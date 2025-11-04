@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.aagameraa.flitter.mixins",
+  "refmap": "mixins.cursedprotocol.refmap.json",
+  "compatibilityLevel": "JAVA_17",
+  "setSourceFile": true,
+  "verbose": true,
+  "client": [
+    "WindowMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

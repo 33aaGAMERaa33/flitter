@@ -838,7 +838,7 @@
             * Model data refactors
             - Convert model data to a final class backed by an immutable map and document mutability requirements. This addresses several thread-safety issues in the current implementation which could result in race conditions
             - Transfer ownership of the data manager to the client level. This addresses several issues that arise when multiple levels are used at once
-            * GUI and widget refactors
+            * GUI and Element refactors
             - Move all widgets to the correct package
             - Rename GuiUtils and children to match vanilla naming
             * New vertex pipeline API
