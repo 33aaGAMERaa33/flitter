@@ -1,12 +1,11 @@
 package com.aagameraa.flitter.material;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class Element extends BuildContext {
     private @Nullable Element parent;
 
-    public void mount(@NotNull Element parent) {
+    public void mount(@Nullable Element parent) {
         this.parent = parent;
     }
 

@@ -1,19 +1,14 @@
 package com.aagameraa.flitter;
 
 import com.aagameraa.flitter.events.WidgetRendererRegisterEvent;
-import com.aagameraa.flitter.interfaces.IWidget;
-import com.aagameraa.flitter.material.Context;
-import com.aagameraa.flitter.material.FlitterApp;
-import com.aagameraa.flitter.widgets.CenterWidget;
+import com.aagameraa.flitter.material.*;
 import com.aagameraa.flitter.widgets.align.*;
 import com.aagameraa.flitter.widgets.column.ColumnElement;
 import com.aagameraa.flitter.widgets.column.ColumnLayout;
 import com.aagameraa.flitter.widgets.column.ColumnRenderer;
-import com.aagameraa.flitter.widgets.column.ColumnWidget;
 import com.aagameraa.flitter.widgets.row.RowElement;
 import com.aagameraa.flitter.widgets.row.RowLayout;
 import com.aagameraa.flitter.widgets.row.RowRenderer;
-import com.aagameraa.flitter.widgets.row.RowWidget;
 import com.aagameraa.flitter.widgets.text.TextElement;
 import com.aagameraa.flitter.widgets.text.TextLayout;
 import com.aagameraa.flitter.widgets.text.TextRenderer;
@@ -29,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 @Mod(Flitter.MOD_ID)
@@ -37,7 +32,7 @@ public class Flitter {
     public static final String MOD_ID = "flitter";
     public static @Nullable Consumer<Exception> onError;
     public static final Logger LOGGER = LogUtils.getLogger();
-    private static @NotNull Context rootContext = new Context();
+    private static @NotNull BuildTree rootBuildTree = new BuildTree();
 
     public Flitter(FMLJavaModLoadingContext modLoadingContext) {
         IEventBus modEventBus = modLoadingContext.getModEventBus();
@@ -45,16 +40,12 @@ public class Flitter {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    static void rebuildContext() {
-        rootContext = new Context();
+    static void rebuildRootBuildTree() {
+        rootBuildTree = new BuildTree();
     }
 
-    static @NotNull Context getRootContext() {
-        return rootContext;
-    }
-
-    public static FlitterApp buildApp() {
-        return new FlitterApp(rootContext.pushNewContext());
+    static @NotNull BuildTree getRootBuildTree() {
+        return rootBuildTree;
     }
 
     static class FlitterBootstrap {
@@ -71,18 +62,44 @@ public class Flitter {
             event.register(AlignElement.class, AlignLayout::new, AlignRenderer::new);
             event.register(ColumnElement.class, ColumnLayout::new, ColumnRenderer::new);
 
-            rootContext.pushWidget(new CenterWidget(
-                    new ColumnWidget.Builder(List.of(
-                            new RowWidget.Builder(List.of(
-                                    new TextWidget.Builder("Olá, Mundo! 1").build(),
-                                    new TextWidget.Builder("Olá, Mundo! 2").build()
-                            )).spacing(12).build(),
-                            new RowWidget.Builder(List.of(
-                                    new TextWidget.Builder("Olá, Mundo! 3").build(),
-                                    new TextWidget.Builder("Olá, Mundo! 4").build()
-                            )).spacing(12).build()
-                    )).spacing(12).build()
-            ));
+            final var app = new FlitterApp(rootBuildTree.pushNewBuildTree());
+            app.pushWidget(new TestWidget());
         }
+    }
+}
+
+class TestWidget extends StatefulWidget {
+    @Override
+    public @NotNull TestWidgetState createState() {
+        return new TestWidgetState();
+    }
+}
+
+class TestWidgetState extends StateWidget<TestWidget> {
+    private int count = 0;
+
+    @Override
+    public @NotNull Widget build(BuildContext context) {
+        return new AlignWidget(
+                Alignment.CENTER_END,
+                new TextWidget.Builder(String.valueOf(count)).build()
+        );
+    }
+
+    @Override
+    public void initState() {
+        super.initState();
+
+        new Thread(() -> {
+            while(true) {
+                try {
+                    setState(() -> count++);
+                    Thread.sleep(1000);
+                }catch(Exception e) {
+                    e.printStackTrace();
+                    break;
+                }
+            }
+        }).start();
     }
 }

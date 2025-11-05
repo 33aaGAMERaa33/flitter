@@ -1,13 +1,12 @@
 package com.aagameraa.flitter.material;
 
-import com.aagameraa.flitter.interfaces.IWidget;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class StatelessWidget implements IWidget {
-    public abstract @NotNull IWidget build(BuildContext context);
+public abstract class StatelessWidget extends Widget {
+    public abstract @NotNull Widget build(BuildContext context);
 
     @Override
-    public Element createElement() {
+    public StatelessElement createElement() {
         return new StatelessElement(this);
     }
 }

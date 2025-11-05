@@ -1,31 +1,39 @@
 package com.aagameraa.flitter.widgets.align;
 
-import com.aagameraa.flitter.FlitterRenderer;
+import com.aagameraa.flitter.factories.IElementRendererFactory;
+import com.aagameraa.flitter.interfaces.ICompoundElementRenderer;
+import com.aagameraa.flitter.interfaces.IElementLayout;
 import com.aagameraa.flitter.interfaces.IElementRenderer;
+import com.aagameraa.flitter.material.Element;
 import com.aagameraa.flitter.models.BoxConstraints;
 import com.aagameraa.flitter.models.Position;
 import com.aagameraa.flitter.models.Size;
 import net.minecraft.client.gui.GuiGraphics;
 import org.jetbrains.annotations.NotNull;
 
-public class AlignRenderer implements IElementRenderer {
-    private final @NotNull IElementRenderer childRenderer;
+public class AlignRenderer implements ICompoundElementRenderer {
+    private final Alignment alignment;
+    private final BoxConstraints constraints;
 
     public AlignRenderer(@NotNull Position position, @NotNull AlignElement element, @NotNull AlignLayout layout) {
-        final var childRendererFactory = FlitterRenderer.getInstance().getElementRendererFactory(element.child());
-        final var constraints = layout.constraints();
-
-        final var alignedPosition = computeAlignedPosition(
-                element.align(), constraints,
-                layout.size(), position
-        );
-
-        this.childRenderer = childRendererFactory.buildRenderer(alignedPosition, element.child(), layout.adaptedElementLayout());
+        this.alignment = element.align();
+        this.constraints = layout.
     }
 
     @Override
     public void render(@NotNull GuiGraphics graphics) {
-        childRenderer.render(graphics);
+
+    }
+
+    @Override
+    public @NotNull IElementRenderer buildElementRenderer(
+            @NotNull Position position,
+            @NotNull Element element,
+            @NotNull IElementRendererFactory<Element, IElementLayout> rendererFactory
+    ) {
+        return rendererFactory.buildRenderer(
+                computeAlignedPosition(alignment, )
+        );
     }
 
     private static Position computeAlignedPosition(
@@ -51,5 +59,4 @@ public class AlignRenderer implements IElementRenderer {
 
         return new Position(leftPos + base.leftPos(), topPos + base.topPos());
     }
-
 }

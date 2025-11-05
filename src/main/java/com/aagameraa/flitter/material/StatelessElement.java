@@ -1,6 +1,5 @@
 package com.aagameraa.flitter.material;
 
-import com.aagameraa.flitter.interfaces.IWidget;
 import org.jetbrains.annotations.NotNull;
 
 public class StatelessElement extends Element {
@@ -10,7 +9,7 @@ public class StatelessElement extends Element {
         this.widget = widget;
     }
 
-    public @NotNull IWidget build() {
-        return widget.build(this);
+    public Widget build() {
+        return this.widget.build(this);
     }
 }

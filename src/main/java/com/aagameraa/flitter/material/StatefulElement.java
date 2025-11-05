@@ -1,21 +1,21 @@
 package com.aagameraa.flitter.material;
 
-import com.aagameraa.flitter.interfaces.IWidget;
 import org.jetbrains.annotations.NotNull;
 
-
 public class StatefulElement extends Element {
-    private final @NotNull StatefulWidget widget;
+    private final @NotNull StateWidget<StatefulWidget> state;
 
-    public StatefulElement(@NotNull StatefulWidget widget) {
-        this.widget = widget;
+    public <T extends StatefulWidget> StatefulElement(@NotNull T widget) {
+        @SuppressWarnings("unchecked")
+        final var state = (StateWidget<StatefulWidget>) widget.createState();
+        state.attach(widget);
+        this.state = state;
     }
 
-    public @NotNull IWidget build() {
-        return this.widget.createState().build(this);
-    }
+    public Widget build() {
+        final var element = this.state.createElement();
+        element.attach(state);
 
-    public @NotNull StatefulWidget widget() {
-        return this.widget;
+        return this.state.build(element);
     }
 }

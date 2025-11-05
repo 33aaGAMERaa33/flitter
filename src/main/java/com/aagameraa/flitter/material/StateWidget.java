@@ -1,18 +1,42 @@
 package com.aagameraa.flitter.material;
 
-import com.aagameraa.flitter.interfaces.IWidget;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public abstract class StateWidget<T extends StatefulWidget> implements IWidget {
-    private final @NotNull T widget;
+import java.util.Objects;
 
-    public StateWidget(@NotNull T widget) {
+public abstract class StateWidget<T extends StatefulWidget> extends Widget {
+    private @Nullable T widget;
+    private @Nullable StateElement<T> element;
+
+    public abstract @NotNull Widget build(BuildContext context);
+
+    public void attach(@NotNull T widget) {
         this.widget = widget;
     }
 
-    abstract IWidget build(BuildContext context);
+    @Override
+    public Element createElement() {
+        final var element = new StateElement<>(this);
+        this.element = element;
+
+        return element;
+    }
+
+    public void initState() {
+
+    }
 
     public void setState(Runnable update) {
         update.run();
+        this.element().markNeedsBuild();
+    }
+
+    public @NotNull T widget() {
+        return Objects.requireNonNull(this.widget);
+    }
+
+    public @NotNull StateElement<T> element() {
+        return Objects.requireNonNull(this.element);
     }
 }

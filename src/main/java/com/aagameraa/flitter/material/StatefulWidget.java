@@ -1,10 +1,9 @@
 package com.aagameraa.flitter.material;
 
-import com.aagameraa.flitter.interfaces.IWidget;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class StatefulWidget implements IWidget {
-    public abstract @NotNull StateWidget<StatefulWidget> createState();
+public abstract class StatefulWidget extends Widget {
+    public abstract @NotNull StateWidget<? extends StatefulWidget> createState();
 
     @Override
     public Element createElement() {

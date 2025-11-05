@@ -1,7 +1,7 @@
 package com.aagameraa.flitter.widgets.text;
 
 import com.aagameraa.flitter.material.Element;
-import com.aagameraa.flitter.interfaces.IWidget;
+import com.aagameraa.flitter.material.Widget;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -13,9 +13,24 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.UUID;
 
-public record TextWidget(String value, TextStyle style) implements IWidget {
+public class TextWidget extends Widget {
+    private final @NotNull String value;
+    private final @NotNull TextStyle style;
     private static final int SCALE = 2;
     private static final HashMap<UUID, TextElementBuildData> textCache = new HashMap<>();
+
+    public TextWidget(@NotNull String value, @NotNull TextStyle style) {
+        this.value = value;
+        this.style = style;
+    }
+
+    public @NotNull String value() {
+        return this.value;
+    }
+
+    public @NotNull TextStyle style() {
+        return style;
+    }
 
     @Override
     public Element createElement() {
