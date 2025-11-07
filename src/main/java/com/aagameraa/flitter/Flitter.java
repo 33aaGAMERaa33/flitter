@@ -2,6 +2,7 @@ package com.aagameraa.flitter;
 
 import com.aagameraa.flitter.events.WidgetRendererRegisterEvent;
 import com.aagameraa.flitter.material.*;
+import com.aagameraa.flitter.widgets.CenterWidget;
 import com.aagameraa.flitter.widgets.align.*;
 import com.aagameraa.flitter.widgets.text.TextElement;
 import com.aagameraa.flitter.widgets.text.TextLayout;
@@ -55,9 +56,9 @@ public class Flitter {
 
             final var app = new FlitterApp(rootBuildTree.pushNewBuildTree());
 
-            app.pushWidget(new AlignWidget.Builder(
+            app.pushWidget(new CenterWidget(
                     new TextWidget.Builder("Olá, Mundo").build()
-            ).alignment(Alignment.CENTER_CENTER).build());
+            ));
 
             app.pushWidget(new TextWidget.Builder("Olá, Mundo!").build());
         }

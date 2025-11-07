@@ -74,7 +74,7 @@ public class FlitterRenderer {
         final var renderers = new ArrayList<IElementRenderer>();
 
         for(final var widget : buildTree.getWidgetsStack()) {
-            final var element = widget.createElement();
+            final var element = this.buildElement(widget.createElement());
             final var layoutFactory = this.getElementLayoutFactory(element);
             final var rendererFactory = this.getElementRendererFactory(element);
 
@@ -85,8 +85,6 @@ public class FlitterRenderer {
                     && layout instanceof ICompoundElementLayout compoundElementLayout
                     && renderer instanceof ICompoundElementRenderer compoundElementRenderer
             ) {
-                this.attachChildrens(compoundElement);
-
                 for(final var child : compoundElement.childrens()) {
                     final var childLayoutFactory = this.getElementLayoutFactory(child);
                     final var childRendererFactory = this.getElementRendererFactory(child);
@@ -107,18 +105,23 @@ public class FlitterRenderer {
         return renderers;
     }
 
-    public void attachChildrens(@NotNull CompoundElement element) {
-        final var childrens = new ArrayList<Element>();
+    public @NotNull Element buildElement(@NotNull Element element) {
+        if(element instanceof StatelessElement statelessElement) {
+            final var buildedElement = statelessElement.build().createElement();
+            buildedElement.mount(element);
 
-        for(final var child : element.childrensToAttach()) {
-            childrens.add(child);
+            return this.buildElement(buildedElement);
+        }else if(element instanceof CompoundElement compoundElement) {
+            final var childrens = new ArrayList<Element>();
 
-            if(child instanceof CompoundElement compoundChild) {
-                this.attachChildrens(compoundChild);
+            for(final var childToAttach : compoundElement.childrensToAttach()) {
+                childrens.add(this.buildElement(childToAttach));
             }
+
+            compoundElement.attachChildrens(childrens);
         }
 
-        element.attachChildrens(childrens);
+        return element;
     }
 
     private @NotNull ElementFactory getElementFactories(@NotNull Element element) {

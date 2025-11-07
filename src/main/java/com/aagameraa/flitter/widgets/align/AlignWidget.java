@@ -14,7 +14,7 @@ public class AlignWidget extends Widget {
     }
 
     @Override
-    public Element createElement() {
+    public @NotNull Element createElement() {
         final var element = new AlignElement(this.alignment, this.child.createElement());
         element.attach(this);
 

@@ -33,7 +33,7 @@ public class TextWidget extends Widget {
     }
 
     @Override
-    public Element createElement() {
+    public @NotNull Element createElement() {
         final var valueHash = value().hashCode();
         final var styleHash = style().hashCode();
         final var msb = ((long) valueHash << 32) | (styleHash & 0xFFFFFFFFL);
