@@ -1,20 +1,20 @@
 package com.aagameraa.flitter.material;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class CompoundElement extends Element {
-    protected @NotNull List<Element> attachedElements = new ArrayList<>();
+    private @Nullable List<Element> childrens = null;
+    public abstract @NotNull List<Element> childrensToAttach();
 
-    public void attachElements(@NotNull List<Element> elements) {
-        this.attachedElements = elements;
+    public void attachChildrens(@NotNull List<Element> childrens) {
+        this.childrens = childrens;
     }
 
-    public @NotNull List<Element> attachedElements() {
-        return this.attachedElements;
+    public @NotNull List<Element> childrens() {
+        return Objects.requireNonNull(this.childrens);
     }
-
-    public abstract @NotNull List<Element> elementsToAttach();
 }

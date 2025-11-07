@@ -12,12 +12,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import org.jetbrains.annotations.NotNull;
 
 public class AlignRenderer implements ICompoundElementRenderer {
-    private final Alignment alignment;
-    private final BoxConstraints constraints;
+    private final @NotNull Position position;
+    private final @NotNull AlignElement element;
+    private final @NotNull AlignLayout layout;
 
     public AlignRenderer(@NotNull Position position, @NotNull AlignElement element, @NotNull AlignLayout layout) {
-        this.alignment = element.align();
-        this.constraints = layout.
+        this.element = element;
+        this.layout = layout;
+        this.position = position;
     }
 
     @Override
@@ -26,13 +28,15 @@ public class AlignRenderer implements ICompoundElementRenderer {
     }
 
     @Override
-    public @NotNull IElementRenderer buildElementRenderer(
-            @NotNull Position position,
-            @NotNull Element element,
-            @NotNull IElementRendererFactory<Element, IElementLayout> rendererFactory
+    public @NotNull IElementRenderer buildChildRenderer(
+            @NotNull Element child,
+            @NotNull IElementLayout childLayout,
+            @NotNull IElementRendererFactory<Element, IElementLayout> childRendererFactory
     ) {
-        return rendererFactory.buildRenderer(
-                computeAlignedPosition(alignment, )
+        return childRendererFactory.buildRenderer(
+                computeAlignedPosition(this.element.align(), this.layout.constraints(), childLayout.size(), this.position),
+                child,
+                childLayout
         );
     }
 

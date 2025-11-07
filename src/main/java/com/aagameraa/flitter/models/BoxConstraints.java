@@ -18,4 +18,20 @@ public record BoxConstraints(int minWidth, int maxWidth, int minHeight, int maxH
     public boolean isTight() {
         return minWidth == maxWidth && minHeight == maxHeight;
     }
+
+    /**
+     * Verifica se este constraint é maior (ou igual) que outro constraint.
+     * Isso significa que seus limites mínimos e máximos são todos maiores ou iguais.
+     */
+    public boolean isLargerThan(@NotNull BoxConstraints other) {
+        return this.minWidth >= other.minWidth
+                && this.maxWidth >= other.maxWidth
+                && this.minHeight >= other.minHeight
+                && this.maxHeight >= other.maxHeight;
+    }
+
+    public static BoxConstraints byMin(int minWidth, int minHeight) {
+        return new BoxConstraints(minWidth, minWidth, minHeight, minHeight);
+
+    }
 }

@@ -15,7 +15,10 @@ public class AlignWidget extends Widget {
 
     @Override
     public Element createElement() {
-        return new AlignElement(this.alignment, this.child.createElement());
+        final var element = new AlignElement(this.alignment, this.child.createElement());
+        element.attach(this);
+
+        return element;
     }
 
     public static class Builder {

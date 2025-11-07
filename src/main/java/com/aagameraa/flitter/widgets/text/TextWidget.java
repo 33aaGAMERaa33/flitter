@@ -82,6 +82,7 @@ public class TextWidget extends Widget {
 
         TextElement textElement = new TextElement(value, fm, resourceLocation);
         textCache.put(uuid, new TextElementBuildData(value, fm, resourceLocation));
+        textElement.attach(this);
 
         return textElement;
     }

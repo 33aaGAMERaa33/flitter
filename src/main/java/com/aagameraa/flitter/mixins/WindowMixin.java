@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class WindowMixin {
     @Inject(method = "onResize", at = @At("TAIL"))
     private void onWindowResize(long window, int width, int height, CallbackInfo ci) {
-        FlitterRenderer.getInstance().rebuildRenders();
+        FlitterRenderer.getInstance().resetBuildTree();
     }
 }

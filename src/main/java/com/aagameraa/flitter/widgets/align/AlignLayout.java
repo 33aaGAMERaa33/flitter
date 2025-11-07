@@ -7,13 +7,12 @@ import com.aagameraa.flitter.material.Element;
 import com.aagameraa.flitter.models.BoxConstraints;
 import com.aagameraa.flitter.models.Size;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
 public class AlignLayout implements ICompoundElementLayout {
-    private @Nullable Size size;
-    private @NotNull BoxConstraints constraints;
+    private @NotNull Size size = new Size(0, 0);
+    private final @NotNull BoxConstraints constraints;
 
     public AlignLayout(@NotNull AlignElement element, @NotNull BoxConstraints constraints) {
         this.constraints = constraints;
@@ -21,7 +20,7 @@ public class AlignLayout implements ICompoundElementLayout {
 
     @Override
     public @NotNull Size size() {
-        return Objects.requireNonNull(size);
+        return Objects.requireNonNull(this.size);
     }
 
     @Override
@@ -30,10 +29,10 @@ public class AlignLayout implements ICompoundElementLayout {
     }
 
     @Override
-    public @NotNull IElementLayout buildElementLayout(@NotNull Element element, @NotNull IElementLayoutFactory<Element, IElementLayout> elementLayoutFactory) {
-        final var layout = elementLayoutFactory.buildLayout(element, constraints);
-        this.size = layout.size();
+    public @NotNull IElementLayout buildChildLayout(@NotNull Element child, IElementLayoutFactory<Element, IElementLayout> childLayoutFactory) {
+        final var childLayout = childLayoutFactory.buildLayout(child, constraints);
+        if(childLayout.size().isBiggerThan(this.size)) this.size = childLayout.size();
 
-        return layout;
+        return childLayout;
     }
 }

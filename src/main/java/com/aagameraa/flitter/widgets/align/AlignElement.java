@@ -4,6 +4,7 @@ import com.aagameraa.flitter.material.CompoundElement;
 import com.aagameraa.flitter.material.Element;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlignElement extends CompoundElement {
@@ -15,12 +16,12 @@ public class AlignElement extends CompoundElement {
         this.child = child;
     }
 
-    public @NotNull Alignment align() {
-        return alignment;
+    @Override
+    public @NotNull List<Element> childrensToAttach() {
+        return List.of(child);
     }
 
-    @Override
-    public @NotNull List<Element> elementsToAttach() {
-        return List.of(child);
+    public @NotNull Alignment align() {
+        return alignment;
     }
 }
