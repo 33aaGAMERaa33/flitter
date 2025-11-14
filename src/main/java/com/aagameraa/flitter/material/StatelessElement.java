@@ -1,20 +1,39 @@
 package com.aagameraa.flitter.material;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class StatelessElement extends Element {
-    private final @NotNull StatelessWidget widget;
+import java.util.Objects;
 
+public class StatelessElement extends ComponentElement {
     public StatelessElement(@NotNull StatelessWidget widget) {
-        this.widget = widget;
-    }
-
-    public @NotNull Widget build() {
-        return this.widget.build(this);
+        super(widget);
     }
 
     @Override
-    public @NotNull StatelessWidget widget() {
-        return this.widget;
+    public void mount(@Nullable Element parent, @Nullable Object slot) {
+        super.mount(parent, slot);
+        this.buildChild();
+    }
+
+    @Override
+    public void update(@NotNull Widget newWidget) {
+        super.update(newWidget);
+        this.buildChild();
+    }
+
+    private void buildChild() {
+        final var child = this.getWidget().build(this).createElement();
+        child.mount(this, null);
+        this.setChild(child);
+    }
+
+    public @NotNull Element getChild() {
+        return Objects.requireNonNull(super.getChild());
+    }
+
+    @Override
+    public @NotNull StatelessWidget getWidget() {
+        return (StatelessWidget) super.getWidget();
     }
 }

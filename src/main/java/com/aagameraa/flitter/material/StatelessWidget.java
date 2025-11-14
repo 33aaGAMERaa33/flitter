@@ -7,9 +7,6 @@ public abstract class StatelessWidget extends Widget {
 
     @Override
     public @NotNull Element createElement() {
-        final var element = new StatelessElement(this);
-        element.attach(this);
-
-        return element;
+        return new StatelessElement(this);
     }
 }
