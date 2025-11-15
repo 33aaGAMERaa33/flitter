@@ -3,10 +3,10 @@ package com.aagameraa.flitter.models;
 import org.jetbrains.annotations.NotNull;
 
 public class Constraints {
-    final int minWidth;
-    final int maxWidth;
-    final int minHeight;
-    final int maxHeight;
+    public final int minWidth;
+    public final int maxWidth;
+    public final int minHeight;
+    public final int maxHeight;
 
     public Constraints(int width, int height) {
         this.minWidth = width;

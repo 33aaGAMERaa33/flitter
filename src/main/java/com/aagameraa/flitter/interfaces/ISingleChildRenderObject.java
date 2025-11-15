@@ -1,8 +1,8 @@
 package com.aagameraa.flitter.interfaces;
 
 import com.aagameraa.flitter.material.RenderObject;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface ISingleChildRenderObject {
-    void setChildRenderObject(@NotNull RenderObject renderObject);
+    void setChildRenderObject(@Nullable RenderObject childRenderObject);
 }

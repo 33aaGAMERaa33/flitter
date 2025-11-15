@@ -12,11 +12,25 @@ public abstract class ComponentElement extends Element {
         super(widget);
     }
 
+    public abstract @NotNull Widget build();
+
+    @Override
+    public void mount(@Nullable Element parent, @Nullable Object slot) {
+        super.mount(parent, slot);
+        this.setChild(this.build().createElement());
+        this.getChild().mount(this, null);
+    }
+
     public void setChild(@Nullable Element child) {
         this.child = child;
     }
 
     public @NotNull Element getChild() {
         return Objects.requireNonNull(child);
+    }
+
+    @Override
+    public @Nullable RenderObject getRenderObject() {
+        return this.getChild().getRenderObject();
     }
 }

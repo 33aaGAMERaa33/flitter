@@ -7,7 +7,5 @@ public abstract class RenderObjectWidget extends Widget {
     public @NotNull Element createElement() {
         return new RenderObjectElement(this);
     }
-
     public abstract @NotNull RenderObject createRenderObject(@NotNull BuildContext context);
-    public abstract void updateRenderObject(@NotNull BuildContext context, @NotNull RenderObject newRenderObject);
 }

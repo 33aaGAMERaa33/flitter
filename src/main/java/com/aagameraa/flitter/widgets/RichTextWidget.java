@@ -14,12 +14,4 @@ public class RichTextWidget extends LeafRenderObjectWidget {
     public @NotNull RenderObject createRenderObject(@NotNull BuildContext context) {
         return new RenderParagraph(this.value);
     }
-
-    @Override
-    public void updateRenderObject(@NotNull BuildContext context, @NotNull RenderObject newRenderObject) {
-        if(!(newRenderObject instanceof RenderParagraph renderParagraph)) return;
-
-        renderParagraph.setValue(this.value);
-        renderParagraph.update();
-    }
 }

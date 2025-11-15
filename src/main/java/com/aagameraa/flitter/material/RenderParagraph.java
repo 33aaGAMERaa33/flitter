@@ -39,11 +39,6 @@ public class RenderParagraph extends RenderBox {
     }
 
     @Override
-    public void update() {
-        this.data = buildParagraphData(this.value);
-    }
-
-    @Override
     public void performLayout() {
         this.setSize(new Size(this.data.fontMetrics().stringWidth(this.data.value()), this.data.fontMetrics().getHeight()));
         this.setConstraints(Constraints.byMin(this.getSize().width(), this.getSize().height()));
