@@ -22,9 +22,8 @@ public class RenderParagraph extends RenderBox {
     private static final HashMap<UUID, ParagraphData> paragraphCache = new HashMap<>();
 
     public RenderParagraph(@NotNull String value) {
-        this.data = buildParagraphData(value);
-        this.value = this.data.value();
-        this.performLayout();
+        this.value = value;
+        this.data = buildParagraphData(this);
     }
 
     @Override
@@ -44,11 +43,23 @@ public class RenderParagraph extends RenderBox {
         this.setConstraints(Constraints.byMin(this.getSize().width(), this.getSize().height()));
     }
 
+    @Override
+    public boolean needsChildLayout() {
+        return false;
+    }
+
+    @Override
+    public void update() {
+        this.data = buildParagraphData(this);
+    }
+
     public void setValue(@NotNull String value) {
         this.value = value;
     }
 
-    private static ParagraphData buildParagraphData(@NotNull String value) {
+    private static ParagraphData buildParagraphData(@NotNull RenderParagraph data) {
+        final var value = data.value;
+
         final var valueHash = value.hashCode();
         final var msb = ((long) valueHash << 32);
         final var lsb = (valueHash & 0xFFFFFFFFL);

@@ -10,28 +10,21 @@ import java.util.Objects;
 
 public abstract class RenderBox extends RenderObject {
     private @Nullable Size size;
-    private @Nullable Constraints constraints;
 
     @Override
     public void layout(@NotNull Constraints constraints) {
-        this.constraints = constraints;
+        if(!this.isNeedsLayout()) return;
+        super.layout(constraints);
         this.performLayout();
     }
 
-    public abstract void performLayout();
+    protected abstract void performLayout();
 
-    public void setConstraints(@Nullable Constraints constraints) {
-        this.constraints = constraints;
-    }
-
-    public @NotNull Constraints getConstraints() {
-        return Objects.requireNonNull(this.constraints);
-    }
-    public void setSize(@Nullable Size size) {
+    protected void setSize(@Nullable Size size) {
         this.size = size;
     }
 
-    public @NotNull Size getSize() {
+    protected @NotNull Size getSize() {
         return Objects.requireNonNull(this.size);
     }
 }

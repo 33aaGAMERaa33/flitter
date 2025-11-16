@@ -6,9 +6,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ColumnWidget extends FlexWidget {
-    public ColumnWidget(@NotNull List<Widget> childrens, int spacing) {
-        super(childrens, Axis.VERTICAL, spacing);
+public class RowWidget extends FlexWidget {
+    public RowWidget(@NotNull List<Widget> childrens, int spacing) {
+        super(childrens, Axis.HORIZONTAL, spacing);
     }
 
     public static class Builder {
@@ -24,8 +24,8 @@ public class ColumnWidget extends FlexWidget {
             return this;
         }
 
-        public ColumnWidget build() {
-            return new ColumnWidget(this.childrens, this.spacing);
+        public RowWidget build() {
+            return new RowWidget(this.childrens, this.spacing);
         }
     }
 }

@@ -19,6 +19,11 @@ public class ViewWidget extends MultiChildRenderObjectWidget {
     }
 
     @Override
+    public void updateRenderObject(@NotNull RenderObject renderObject) {
+        renderObject.update();
+    }
+
+    @Override
     public @NotNull List<Widget> getChildrens() {
         return childrens;
     }

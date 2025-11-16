@@ -1,6 +1,7 @@
 package com.aagameraa.flitter.material;
 
 import com.aagameraa.flitter.exceptions.IncorrectRenderException;
+import com.aagameraa.flitter.exceptions.IncorrectWidgetProvidedException;
 import com.aagameraa.flitter.interfaces.ISingleChildRenderObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,11 +29,43 @@ public class SingleChildRenderObjectElement extends RenderObjectElement {
         );
 
         renderObject.setChildRenderObject(Objects.requireNonNull(this.getChild().getRenderObject()));
+        this.getRenderObject().adoptChild(this.getChild().getRenderObject());
+    }
+
+    @Override
+    public void update(@NotNull Widget newWidget) {
+        super.update(newWidget);
+
+        if(!(newWidget instanceof SingleChildRenderObjectWidget singleChildRenderObjectWidget)) throw new IncorrectWidgetProvidedException(
+                newWidget,
+                SingleChildRenderObjectWidget.class
+        );
+
+        final var newChildWidget = singleChildRenderObjectWidget.getChild();
+        if(newChildWidget == null) return;
+
+        if(this.getChild().canUpdate(newChildWidget)) this.getChild().update(newWidget);
+        else {
+            final var newChild = newChildWidget.createElement();
+            newChild.mount(this, null);
+            this.setChild(newChild);
+
+            if(!(this.getRenderObject() instanceof ISingleChildRenderObject singleChildRenderObject)) throw new IncorrectRenderException(
+                    this, this.getRenderObject(), ISingleChildRenderObject.class
+            );
+
+            this.getRenderObject().adoptChild(Objects.requireNonNull(this.getChild().getRenderObject()));
+            singleChildRenderObject.setChildRenderObject(Objects.requireNonNull(this.getChild().getRenderObject()));
+        }
     }
 
     @Override
     public @NotNull SingleChildRenderObjectWidget getWidget() {
         return (SingleChildRenderObjectWidget) super.getWidget();
+    }
+
+    public void setChild(@NotNull Element child) {
+        this.child = child;
     }
 
     public @NotNull Element getChild() {

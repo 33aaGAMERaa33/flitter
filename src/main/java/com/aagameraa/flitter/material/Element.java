@@ -17,6 +17,14 @@ public abstract class Element extends BuildContext {
         this.parent = parent;
     }
 
+    public void update(@NotNull Widget newWidget) {
+        this.setWidget(newWidget);
+    }
+
+    public boolean canUpdate(@NotNull Widget newWidget) {
+        return this.getWidget().getClass() == newWidget.getClass();
+    }
+
     public @Nullable Element getParent() {
         return this.parent;
     }

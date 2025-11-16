@@ -14,7 +14,6 @@ public abstract class SingleChildRenderObjectWidget extends RenderObjectWidget {
     public @NotNull Element createElement() {
         return new SingleChildRenderObjectElement(this);
     }
-
     public @Nullable Widget getChild() {
         return this.child;
     }

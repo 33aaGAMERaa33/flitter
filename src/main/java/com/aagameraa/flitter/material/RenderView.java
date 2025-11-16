@@ -17,15 +17,23 @@ public class RenderView extends RenderBox implements IMultiChildRenderObject {
     public void render(@NotNull GuiGraphics graphics, @NotNull Offset offset) {
         if(childRenderObjects == null) return;
 
-        for(final var childRenderObject : this.childRenderObjects) {
-            childRenderObject.render(graphics, offset);
-        }
+        for(final var childRenderObject : this.getChildRenderObjects()) childRenderObject.render(graphics, offset);
+    }
+
+    @Override
+    public void update() {
+
     }
 
     @Override
     public void performLayout() {
         this.setSize(new Size(this.getConstraints().maxWidth, this.getConstraints().maxHeight));
         for(final var childRenderObject : this.getChildRenderObjects()) childRenderObject.layout(this.getConstraints());
+    }
+
+    @Override
+    public boolean needsChildLayout() {
+        return true;
     }
 
     @Override
