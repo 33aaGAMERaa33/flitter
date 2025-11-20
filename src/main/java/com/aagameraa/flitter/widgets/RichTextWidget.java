@@ -1,6 +1,8 @@
 package com.aagameraa.flitter.widgets;
 
 import com.aagameraa.flitter.material.*;
+import com.aagameraa.flitter.material.renders.RenderParagraph;
+import com.aagameraa.flitter.material.widgets.LeafRenderObjectWidget;
 import org.jetbrains.annotations.NotNull;
 
 public class RichTextWidget extends LeafRenderObjectWidget {
