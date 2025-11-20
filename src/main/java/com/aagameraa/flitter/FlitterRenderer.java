@@ -1,8 +1,8 @@
 package com.aagameraa.flitter;
 
 import com.aagameraa.flitter.material.*;
-import com.aagameraa.flitter.material.elements.ComponentElement;
-import com.aagameraa.flitter.material.elements.RenderObjectElement;
+import com.aagameraa.flitter.material.ComponentElement;
+import com.aagameraa.flitter.material.RenderObjectElement;
 import com.aagameraa.flitter.models.Constraints;
 import com.aagameraa.flitter.models.Offset;
 import com.aagameraa.flitter.widgets.ViewWidget;

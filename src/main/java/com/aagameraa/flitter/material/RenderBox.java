@@ -1,6 +1,5 @@
-package com.aagameraa.flitter.material.renders;
+package com.aagameraa.flitter.material;
 
-import com.aagameraa.flitter.material.RenderObject;
 import com.aagameraa.flitter.models.Constraints;
 import com.aagameraa.flitter.models.Size;
 import org.jetbrains.annotations.NotNull;

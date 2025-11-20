@@ -1,9 +1,5 @@
-package com.aagameraa.flitter.material.widgets;
+package com.aagameraa.flitter.material;
 
-import com.aagameraa.flitter.material.BuildContext;
-import com.aagameraa.flitter.material.Element;
-import com.aagameraa.flitter.material.elements.StatelessElement;
-import com.aagameraa.flitter.material.Widget;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class StatelessWidget extends Widget {

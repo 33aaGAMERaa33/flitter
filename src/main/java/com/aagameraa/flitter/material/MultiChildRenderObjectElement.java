@@ -1,10 +1,8 @@
-package com.aagameraa.flitter.material.elements;
+package com.aagameraa.flitter.material;
 
 import com.aagameraa.flitter.exceptions.IncorrectRenderException;
 import com.aagameraa.flitter.exceptions.IncorrectWidgetProvidedException;
 import com.aagameraa.flitter.interfaces.IMultiChildRenderObject;
-import com.aagameraa.flitter.material.*;
-import com.aagameraa.flitter.material.widgets.MultiChildRenderObjectWidget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,20 +14,20 @@ public class MultiChildRenderObjectElement extends RenderObjectElement {
 
     public MultiChildRenderObjectElement(@NotNull MultiChildRenderObjectWidget widget) {
         super(widget);
-
-        this.childrens = widget.getChildrens().stream().map(childWidget -> {
-            final var child = childWidget.createElement();
-            child.mount(this, null);
-
-            return child;
-        }).toList();
+        this.childrens = new ArrayList<>();
     }
 
     @Override
     public void mount(@Nullable Element parent, @Nullable Object slot) {
         super.mount(parent, slot);
 
-        this.updateChildrens(this.getWidget().getChildrens());
+        for(final var childWidget : this.getWidget().getChildrens()) {
+            final var child = childWidget.createElement();
+            child.mount(this, null);
+
+            this.childrens.add(child);
+        }
+
         this.updateChildRenderObjects();
     }
 
@@ -37,12 +35,12 @@ public class MultiChildRenderObjectElement extends RenderObjectElement {
     public void update(@NotNull Widget newWidget) {
         super.update(newWidget);
 
-        if(!(newWidget instanceof MultiChildRenderObjectWidget multiChildRenderObjectWidget)) throw new IncorrectWidgetProvidedException(
+        if(!(newWidget instanceof MultiChildRenderObjectWidget)) throw new IncorrectWidgetProvidedException(
                 newWidget,
                 MultiChildRenderObjectWidget.class
         );
 
-        this.updateChildrens(multiChildRenderObjectWidget.getChildrens());
+        this.updateChildrens(this.getWidget().getChildrens());
         this.updateChildRenderObjects();
     }
 
@@ -72,7 +70,6 @@ public class MultiChildRenderObjectElement extends RenderObjectElement {
         final var childRenderObjects = new ArrayList<@NotNull RenderObject>();
 
         for(final var child : this.childrens) {
-            child.mount(this, null);
             if(child.getRenderObject() == null) continue;
 
             childRenderObjects.add(child.getRenderObject());

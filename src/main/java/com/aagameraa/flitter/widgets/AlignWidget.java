@@ -1,7 +1,7 @@
 package com.aagameraa.flitter.widgets;
 
 import com.aagameraa.flitter.material.*;
-import com.aagameraa.flitter.material.widgets.SingleChildRenderObjectWidget;
+import com.aagameraa.flitter.material.SingleChildRenderObjectWidget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,6 +1,7 @@
 package com.aagameraa.flitter;
 
 import com.aagameraa.flitter.material.*;
+import com.aagameraa.flitter.widgets.*;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 @Mod(Flitter.MOD_ID)
@@ -28,7 +30,24 @@ public class Flitter {
     @SubscribeEvent
     public void onLoggedIn(ClientPlayerNetworkEvent.LoggingIn event) {
         rootBuildTree = new BuildTree();
-        rootBuildTree.widgets.add(new Counter());
+        rootBuildTree.widgets.add(
+            new ColumnWidget.Builder(
+                    List.of(
+                            new RowWidget.Builder(
+                                    List.of(
+                                            new RichTextWidget("Olá, Mundo 1!"),
+                                            new RichTextWidget("Olá, Mundo 2!")
+                                    )
+                            ).build(),
+                            new RowWidget.Builder(
+                                    List.of(
+                                            new RichTextWidget("Olá, Mundo 1!"),
+                                            new RichTextWidget("Olá, Mundo 2!")
+                                    )
+                            ).build()
+                    )
+            ).build()
+        );
     }
 
     @SubscribeEvent

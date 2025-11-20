@@ -1,9 +1,7 @@
-package com.aagameraa.flitter.material.renders;
+package com.aagameraa.flitter.material;
 
 import com.aagameraa.flitter.exceptions.ChildWidgetRenderNotSupportedException;
 import com.aagameraa.flitter.interfaces.IMultiChildRenderObject;
-import com.aagameraa.flitter.material.Axis;
-import com.aagameraa.flitter.material.RenderObject;
 import com.aagameraa.flitter.models.Offset;
 import com.aagameraa.flitter.models.Size;
 import net.minecraft.client.gui.GuiGraphics;

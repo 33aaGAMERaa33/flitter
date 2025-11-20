@@ -1,8 +1,5 @@
-package com.aagameraa.flitter.material.widgets;
+package com.aagameraa.flitter.material;
 
-import com.aagameraa.flitter.material.Element;
-import com.aagameraa.flitter.material.Widget;
-import com.aagameraa.flitter.material.elements.MultiChildRenderObjectElement;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

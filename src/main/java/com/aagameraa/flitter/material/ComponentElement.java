@@ -1,9 +1,6 @@
-package com.aagameraa.flitter.material.elements;
+package com.aagameraa.flitter.material;
 
 import com.aagameraa.flitter.FlitterRenderer;
-import com.aagameraa.flitter.material.Element;
-import com.aagameraa.flitter.material.RenderObject;
-import com.aagameraa.flitter.material.Widget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

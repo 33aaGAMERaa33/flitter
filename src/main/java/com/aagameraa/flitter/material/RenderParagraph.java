@@ -1,6 +1,5 @@
-package com.aagameraa.flitter.material.renders;
+package com.aagameraa.flitter.material;
 
-import com.aagameraa.flitter.material.ParagraphData;
 import com.aagameraa.flitter.models.Constraints;
 import com.aagameraa.flitter.models.Offset;
 import com.aagameraa.flitter.models.Size;

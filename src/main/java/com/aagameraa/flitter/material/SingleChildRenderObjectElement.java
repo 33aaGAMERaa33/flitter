@@ -1,11 +1,8 @@
-package com.aagameraa.flitter.material.elements;
+package com.aagameraa.flitter.material;
 
 import com.aagameraa.flitter.exceptions.IncorrectRenderException;
 import com.aagameraa.flitter.exceptions.IncorrectWidgetProvidedException;
 import com.aagameraa.flitter.interfaces.ISingleChildRenderObject;
-import com.aagameraa.flitter.material.Element;
-import com.aagameraa.flitter.material.Widget;
-import com.aagameraa.flitter.material.widgets.SingleChildRenderObjectWidget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

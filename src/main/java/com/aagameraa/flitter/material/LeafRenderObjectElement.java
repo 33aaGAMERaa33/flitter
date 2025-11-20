@@ -1,6 +1,5 @@
-package com.aagameraa.flitter.material.elements;
+package com.aagameraa.flitter.material;
 
-import com.aagameraa.flitter.material.widgets.LeafRenderObjectWidget;
 import org.jetbrains.annotations.NotNull;
 
 public class LeafRenderObjectElement extends RenderObjectElement {
