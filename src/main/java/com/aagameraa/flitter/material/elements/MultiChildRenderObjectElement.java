@@ -1,8 +1,10 @@
-package com.aagameraa.flitter.material;
+package com.aagameraa.flitter.material.elements;
 
 import com.aagameraa.flitter.exceptions.IncorrectRenderException;
 import com.aagameraa.flitter.exceptions.IncorrectWidgetProvidedException;
 import com.aagameraa.flitter.interfaces.IMultiChildRenderObject;
+import com.aagameraa.flitter.material.*;
+import com.aagameraa.flitter.material.widgets.MultiChildRenderObjectWidget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,12 +16,20 @@ public class MultiChildRenderObjectElement extends RenderObjectElement {
 
     public MultiChildRenderObjectElement(@NotNull MultiChildRenderObjectWidget widget) {
         super(widget);
-        this.childrens = widget.getChildrens().stream().map(Widget::createElement).toList();
+
+        this.childrens = widget.getChildrens().stream().map(childWidget -> {
+            final var child = childWidget.createElement();
+            child.mount(this, null);
+
+            return child;
+        }).toList();
     }
 
     @Override
     public void mount(@Nullable Element parent, @Nullable Object slot) {
         super.mount(parent, slot);
+
+        this.updateChildrens(this.getWidget().getChildrens());
         this.updateChildRenderObjects();
     }
 
@@ -32,23 +42,29 @@ public class MultiChildRenderObjectElement extends RenderObjectElement {
                 MultiChildRenderObjectWidget.class
         );
 
-        for(int i = 0; i < multiChildRenderObjectWidget.getChildrens().size(); i++) {
-            final var newChildWidget = multiChildRenderObjectWidget.getChildrens().get(i);
+        this.updateChildrens(multiChildRenderObjectWidget.getChildrens());
+        this.updateChildRenderObjects();
+    }
 
-            if(i < this.childrens.size()) {
-                final var oldChild = this.childrens.get(i);
-                if(oldChild.canUpdate(newChildWidget)) oldChild.update(newWidget);
-                else {
-                    this.childrens.remove(i);
-                    this.childrens.add(i, newChildWidget.createElement());
-                }
+    private void updateChildrens(@NotNull List<Widget> childrens) {
+        final var newChildrens = new ArrayList<Element>();
+
+        for(int i = 0; i < this.childrens.size(); i++) {
+            if(i >= childrens.size()) break;
+            final var oldChild = this.childrens.get(i);
+            final var newChildWidget = childrens.get(i);
+
+            if(oldChild.canUpdate(newChildWidget)) {
+                newChildrens.add(oldChild);
+                oldChild.update(newChildWidget);
             }else {
                 final var newChild = newChildWidget.createElement();
                 newChild.mount(this, null);
+                newChildrens.add(newChild);
             }
         }
 
-        this.updateChildRenderObjects();
+        this.childrens = newChildrens;
     }
 
     private void updateChildRenderObjects() {

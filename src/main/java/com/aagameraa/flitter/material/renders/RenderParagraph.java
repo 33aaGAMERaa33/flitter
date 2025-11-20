@@ -1,5 +1,6 @@
-package com.aagameraa.flitter.material;
+package com.aagameraa.flitter.material.renders;
 
+import com.aagameraa.flitter.material.ParagraphData;
 import com.aagameraa.flitter.models.Constraints;
 import com.aagameraa.flitter.models.Offset;
 import com.aagameraa.flitter.models.Size;
@@ -50,6 +51,7 @@ public class RenderParagraph extends RenderBox {
 
     @Override
     public void update() {
+        super.update();
         this.data = buildParagraphData(this);
     }
 

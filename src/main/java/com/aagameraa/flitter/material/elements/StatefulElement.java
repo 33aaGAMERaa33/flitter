@@ -1,7 +1,9 @@
-package com.aagameraa.flitter.material;
+package com.aagameraa.flitter.material.elements;
 
+import com.aagameraa.flitter.material.Widget;
+import com.aagameraa.flitter.material.widgets.StateWidget;
+import com.aagameraa.flitter.material.widgets.StatefulWidget;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 
 public class StatefulElement extends ComponentElement {
@@ -13,12 +15,13 @@ public class StatefulElement extends ComponentElement {
         final StateWidget<StatefulWidget> state = (StateWidget<StatefulWidget>) widget.createState();
         state.attach(widget, this);
         this.state = state;
+        this.state.initState();
     }
 
     @Override
-    public void mount(@Nullable Element parent, @Nullable Object slot) {
-        super.mount(parent, slot);
-        this.state.initState();
+    public void unmount() {
+        super.unmount();
+        this.state.dispose();
     }
 
     @Override

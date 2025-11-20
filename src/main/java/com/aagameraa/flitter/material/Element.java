@@ -17,12 +17,26 @@ public abstract class Element extends BuildContext {
         this.parent = parent;
     }
 
+    public void unmount() {
+        this.parent = null;
+        this.slot = null;
+    }
+
     public void update(@NotNull Widget newWidget) {
         this.setWidget(newWidget);
     }
 
     public boolean canUpdate(@NotNull Widget newWidget) {
-        return this.getWidget().getClass() == newWidget.getClass();
+        /*
+        System.out.printf(
+                "Old: %s, New: %s, Equals: %s\n",
+                this.getWidget().getClass().getSimpleName(),
+                newWidget.getClass().getSimpleName(),
+                this.getWidget().getClass().isInstance(newWidget)
+        );
+        * */
+
+        return this.getWidget().getClass().isInstance(newWidget);
     }
 
     public @Nullable Element getParent() {

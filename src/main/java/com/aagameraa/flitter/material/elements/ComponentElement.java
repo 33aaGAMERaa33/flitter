@@ -1,10 +1,11 @@
-package com.aagameraa.flitter.material;
+package com.aagameraa.flitter.material.elements;
 
 import com.aagameraa.flitter.FlitterRenderer;
+import com.aagameraa.flitter.material.Element;
+import com.aagameraa.flitter.material.RenderObject;
+import com.aagameraa.flitter.material.Widget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public abstract class ComponentElement extends Element {
     private @Nullable Element child = null;
@@ -30,7 +31,7 @@ public abstract class ComponentElement extends Element {
     @Override
     public void update(@NotNull Widget newWidget) {
         super.update(newWidget);
-        this.setChild(this.updateChild(this.getChild(), newWidget));
+        this.setChild(this.updateChild(this.getChild(), this.build()));
     }
 
     protected @NotNull Element updateChild(@Nullable Element oldChild, @NotNull Widget newChildWidget) {
@@ -38,6 +39,8 @@ public abstract class ComponentElement extends Element {
             oldChild.update(newChildWidget);
             return oldChild;
         }
+
+        if(oldChild != null) oldChild.unmount();
 
         final var newChild = newChildWidget.createElement();
         newChild.mount(this, null);
@@ -53,7 +56,7 @@ public abstract class ComponentElement extends Element {
     public void rebuild() {
         if(!this.dirty) return;
         this.dirty = false;
-        this.update(this.build());
+        this.update(this.getWidget());
     }
 
     public void setChild(@Nullable Element child) {

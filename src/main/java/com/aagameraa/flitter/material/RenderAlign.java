@@ -2,6 +2,7 @@ package com.aagameraa.flitter.material;
 
 import com.aagameraa.flitter.exceptions.ChildWidgetRenderNotSupportedException;
 import com.aagameraa.flitter.interfaces.ISingleChildRenderObject;
+import com.aagameraa.flitter.material.renders.RenderBox;
 import com.aagameraa.flitter.models.Offset;
 import com.aagameraa.flitter.models.Size;
 import net.minecraft.client.gui.GuiGraphics;
@@ -55,7 +56,7 @@ public class RenderAlign extends RenderBox implements ISingleChildRenderObject {
 
     @Override
     public void update() {
-
+        super.update();
     }
 
     @Override

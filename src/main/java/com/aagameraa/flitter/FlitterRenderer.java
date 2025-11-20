@@ -1,6 +1,8 @@
 package com.aagameraa.flitter;
 
 import com.aagameraa.flitter.material.*;
+import com.aagameraa.flitter.material.elements.ComponentElement;
+import com.aagameraa.flitter.material.elements.RenderObjectElement;
 import com.aagameraa.flitter.models.Constraints;
 import com.aagameraa.flitter.models.Offset;
 import com.aagameraa.flitter.widgets.ViewWidget;
@@ -48,14 +50,25 @@ public class FlitterRenderer {
     public void preRender(RenderGuiOverlayEvent.Post event) {
         final var currentBuildTree = this.getCurrentRootBuildTree();
 
-        if(currentBuildTree.equals(this.lastBuildTree)) {
-            final var start = System.nanoTime();
+        if(currentBuildTree == null) {
+            if(lastBuildTree != null) this.lastBuildTree = null;
+            if(this.rootElement != null) this.rootElement = null;
+            return;
+        }else if(currentBuildTree.equals(this.lastBuildTree)) {
+            try {
+                if(this.dirtyElements.isEmpty() && this.dirtyRenderObjects.isEmpty()) return;
+                final var start = System.nanoTime();
 
-            this.processDirtyElements();
-            this.processDirtyRenderObjects();
+                if(!this.dirtyElements.isEmpty()) this.processDirtyElements();
+                if(!this.dirtyRenderObjects.isEmpty()) this.processDirtyRenderObjects();
 
-            final var elapsed = (System.nanoTime() - start) / 1_000_000.0;
-            System.out.printf("Processed %s dirted elements in %sms\n", this.dirtyElements.size(), elapsed);
+                final var elapsed = (System.nanoTime() - start) / 1_000_000.0;
+                Flitter.LOGGER.info("Updated in {}ms", elapsed);
+            }catch (Exception e) {
+                e.printStackTrace();
+                this.dirtyElements.clear();
+                this.dirtyRenderObjects.clear();
+            }
             return;
         }
 
@@ -71,7 +84,7 @@ public class FlitterRenderer {
         if(rootRender != null) rootRender.layout(constraints);
 
         final var elapsed = (System.nanoTime() - start) / 1_000_000.0;
-        System.out.printf("Builded in %sms\n", elapsed);
+        Flitter.LOGGER.info("Builded in {}ms", elapsed);
     }
 
     private @NotNull Element buildElementTree(@NotNull BuildTree buildTree) {
@@ -102,6 +115,7 @@ public class FlitterRenderer {
         for(final var element : this.dirtyRenderObjects) {
             element.relayout();
         }
+
         this.dirtyRenderObjects.clear();
     }
 
@@ -118,14 +132,15 @@ public class FlitterRenderer {
     public void resetBuildTree() {
         if(this.lastBuildTree == null) return;
         this.lastBuildTree = null;
-        System.out.println("BuildTree reseted");
+        if(this.rootElement != null) this.rootElement.unmount();
+        Flitter.LOGGER.info("BuildTree reseted");
     }
 
     public static FlitterRenderer getInstance() {
         return instance;
     }
 
-    public @NotNull BuildTree getCurrentRootBuildTree() {
+    public @Nullable BuildTree getCurrentRootBuildTree() {
         return Flitter.rootBuildTree;
     }
 }

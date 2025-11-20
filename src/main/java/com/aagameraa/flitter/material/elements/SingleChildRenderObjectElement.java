@@ -1,8 +1,11 @@
-package com.aagameraa.flitter.material;
+package com.aagameraa.flitter.material.elements;
 
 import com.aagameraa.flitter.exceptions.IncorrectRenderException;
 import com.aagameraa.flitter.exceptions.IncorrectWidgetProvidedException;
 import com.aagameraa.flitter.interfaces.ISingleChildRenderObject;
+import com.aagameraa.flitter.material.Element;
+import com.aagameraa.flitter.material.Widget;
+import com.aagameraa.flitter.material.widgets.SingleChildRenderObjectWidget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,10 +47,13 @@ public class SingleChildRenderObjectElement extends RenderObjectElement {
         final var newChildWidget = singleChildRenderObjectWidget.getChild();
         if(newChildWidget == null) return;
 
-        if(this.getChild().canUpdate(newChildWidget)) this.getChild().update(newWidget);
-        else {
+        if(this.getChild().canUpdate(newChildWidget)) {
+            this.getChild().update(newChildWidget);
+        } else {
             final var newChild = newChildWidget.createElement();
             newChild.mount(this, null);
+            this.getChild().unmount();
+
             this.setChild(newChild);
 
             if(!(this.getRenderObject() instanceof ISingleChildRenderObject singleChildRenderObject)) throw new IncorrectRenderException(

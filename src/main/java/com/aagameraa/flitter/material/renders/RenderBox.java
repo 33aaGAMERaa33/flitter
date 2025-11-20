@@ -1,7 +1,7 @@
-package com.aagameraa.flitter.material;
+package com.aagameraa.flitter.material.renders;
 
+import com.aagameraa.flitter.material.RenderObject;
 import com.aagameraa.flitter.models.Constraints;
-import com.aagameraa.flitter.models.Offset;
 import com.aagameraa.flitter.models.Size;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,10 +12,11 @@ public abstract class RenderBox extends RenderObject {
     private @Nullable Size size;
 
     @Override
-    public void layout(@NotNull Constraints constraints) {
-        if(!this.isNeedsLayout()) return;
-        super.layout(constraints);
+    public final void layout(@NotNull Constraints constraints) {
+        if(!this.needsLayout()) return;
+        this.setConstraints(constraints);
         this.performLayout();
+        this.needsLayout = false;
     }
 
     protected abstract void performLayout();

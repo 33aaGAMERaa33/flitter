@@ -1,7 +1,9 @@
-package com.aagameraa.flitter.material;
+package com.aagameraa.flitter.material.renders;
 
 import com.aagameraa.flitter.exceptions.ChildWidgetRenderNotSupportedException;
 import com.aagameraa.flitter.interfaces.IMultiChildRenderObject;
+import com.aagameraa.flitter.material.Axis;
+import com.aagameraa.flitter.material.RenderObject;
 import com.aagameraa.flitter.models.Offset;
 import com.aagameraa.flitter.models.Size;
 import net.minecraft.client.gui.GuiGraphics;
@@ -47,7 +49,7 @@ public class RenderFlex extends RenderBox implements IMultiChildRenderObject {
 
     @Override
     public void update() {
-
+        super.update();
     }
 
     @Override

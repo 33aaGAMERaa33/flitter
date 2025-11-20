@@ -1,5 +1,8 @@
-package com.aagameraa.flitter.material;
+package com.aagameraa.flitter.material.widgets;
 
+import com.aagameraa.flitter.material.BuildContext;
+import com.aagameraa.flitter.material.elements.StatefulElement;
+import com.aagameraa.flitter.material.Widget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

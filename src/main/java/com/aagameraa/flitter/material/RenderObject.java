@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public abstract class RenderObject {
-    private boolean needsLayout = true;
+    protected boolean needsLayout = true;
     private @Nullable Constraints constraints;
     private @Nullable RenderObject parent = null;
 
@@ -21,13 +21,9 @@ public abstract class RenderObject {
         this.markNeedsLayout();
     }
 
-    public void layout(@NotNull Constraints constraints) {
-        this.needsLayout = false;
-        this.setConstraints(constraints);
-    }
+    public abstract void layout(@NotNull Constraints constraints);
 
     public void relayout() {
-        if(!this.needsLayout) return;
         this.layout(this.getConstraints());
     }
 
@@ -39,7 +35,7 @@ public abstract class RenderObject {
         else FlitterRenderer.getInstance().scheduleLayoutFor(this);
     }
 
-    public boolean isNeedsLayout() {
+    public boolean needsLayout() {
         return needsLayout;
     }
 

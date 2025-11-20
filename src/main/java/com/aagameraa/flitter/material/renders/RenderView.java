@@ -1,6 +1,7 @@
-package com.aagameraa.flitter.material;
+package com.aagameraa.flitter.material.renders;
 
 import com.aagameraa.flitter.interfaces.IMultiChildRenderObject;
+import com.aagameraa.flitter.material.RenderObject;
 import com.aagameraa.flitter.models.Offset;
 import com.aagameraa.flitter.models.Size;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,7 +23,7 @@ public class RenderView extends RenderBox implements IMultiChildRenderObject {
 
     @Override
     public void update() {
-
+        super.update();
     }
 
     @Override
@@ -33,7 +34,7 @@ public class RenderView extends RenderBox implements IMultiChildRenderObject {
 
     @Override
     public boolean needsChildLayout() {
-        return true;
+        return false;
     }
 
     @Override
